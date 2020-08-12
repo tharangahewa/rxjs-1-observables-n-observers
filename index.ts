@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 //Uncomment the ex functions as you want. Ex- ex1(), ex2() etc.  
 
 /**
- * Ex1: In this snippet we will crate an observable and subscribe (listen) to it.
+ * Ex1: In this snippet we will crate an observable and subscribe (listen) an obsever to it.
  * We will complete the observable as well.
  */
 

@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 
-//Uncomment the ex functions as you want. Ex- ex1(), ex2() etc.  
+//Uncomment the ex functions as you want. Ex- ex1(), ex2() etc.
 
 /**
  * Ex1: In this snippet we will crate an observable and subscribe (listen) an obsever to it.
@@ -80,7 +80,7 @@ const ex3 = function() {
   const observable = new Observable(subscriber => {
     let count = 0;
     setInterval(() => {
-      if(count >= 10 ) subscriber.complete(); 
+      if (count >= 10) subscriber.complete();
       subscriber.next(count++);
     }, 1000);
   });
@@ -88,11 +88,11 @@ const ex3 = function() {
   const observer = {
     next: result => console.log(result),
     error: errorMsg => console.log(errorMsg),
-    complete: () => console.log("Finished")
+    complete: () => console.log("finished")
   };
 
   observable.subscribe(observer);
-  console.log( 'after subscribe');
+  console.log("subscribed");
 };
 
 // ex3();
@@ -109,9 +109,9 @@ const ex3 = function() {
 const ex4 = function() {
   const observable = new Observable(subscriber => {
     let count = 0;
-    console.log('subscriber id= ' + Math.random() );
+    console.log("subscriber id= " + Math.random());
     setInterval(() => {
-      if(count >= 10 ) subscriber.complete(); 
+      if (count >= 10) subscriber.complete();
       subscriber.next(count++);
     }, 1000);
   });
@@ -119,20 +119,51 @@ const ex4 = function() {
   const observer = {
     next: result => console.log(result),
     error: errorMsg => console.log(errorMsg),
-    complete: () => console.log("Finished")
+    complete: () => console.log("finished")
   };
 
   observable.subscribe(observer);
 
-  setTimeout(
-    () => observable.subscribe(observer),
-    5000
-  );
+  setTimeout(() => observable.subscribe(observer), 5000);
 };
 
-ex4();
+// ex4();
 /**
- * Two series of number will independantly be printed for each observer (subscription). 
+ * Two series of number will independantly be printed for each observer (subscription).
  * Means there will be a subscriber (inside the Observable) created for each observer (subscription)
  * Note the subscriber id
+ */
+
+/**
+ * Ex5: In this snippet we will explore how we can unsusbscribe from a observable
+ */
+
+const ex5 = function() {
+  const observable = new Observable(subscriber => {
+    let count = 0;
+    setInterval(() => {
+      //if(count >= 10 ) subscriber.complete(); // observable does not complete by it self
+      subscriber.next(count++);
+    }, 1000);
+  });
+
+  const observer = {
+    next: result => console.log(result),
+    error: errorMsg => console.log(errorMsg),
+    complete: () => console.log("finished")
+  };
+
+  const subscription = observable.subscribe(observer);
+  console.log("subscribed");
+
+  setTimeout(() => {
+    subscription.unsubscribe();
+    console.log("un-subscribed");
+  }, 5000);
+};
+
+// ex5();
+/**
+ * Ex5 observations:
+ * Observer prints a series of numbers asychronously, after un-subscribing it stops.
  */
